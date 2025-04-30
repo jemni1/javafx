@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.image.ImageView?>
+<?import java.lang.String?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.ModifierRecyclageController"
+      spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20;">
+
+    <Label text="✏️ Modifier le recyclage" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <GridPane vgap="10" hgap="10">
+        <columnConstraints>
+            <ColumnConstraints minWidth="150" prefWidth="180"/>
+            <ColumnConstraints prefWidth="300"/>
+        </columnConstraints>
+
+        <!-- Quantité recyclée (kg) -->
+        <Label text="Quantité recyclée (kg):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <TextField fx:id="quantiteRecyclageField" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                   promptText="Entrez la quantité" style="-fx-text-fill: #388e3c;" />
+
+        <!-- Énergie produite (kWh) -->
+        <Label text="Énergie produite (kWh):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <TextField fx:id="energieProduiteField" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                   promptText="Entrez l'énergie produite" style="-fx-text-fill: #1976d2;" />
+
+        <!-- Utilisation de l'énergie -->
+        <Label text="Utilisation de l'énergie:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <ComboBox fx:id="utilisationEnergieField" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                  promptText="Sélectionnez une utilisation" maxWidth="Infinity">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Irrigation"/>
+                    <String fx:value="Chauffage"/>
+                    <String fx:value="Alimentation"/>
+                    <String fx:value="Stockage d'énergie"/>
+                    <String fx:value="Autre"/>
+                </FXCollections>
+            </items>
+        </ComboBox>
+
+        <!-- Date de début -->
+        <Label text="Date de début:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateDebutPicker" GridPane.rowIndex="3" GridPane.columnIndex="1"
+                    promptText="Sélectionnez la date" maxWidth="Infinity"/>
+
+        <!-- Date de fin -->
+        <Label text="Date de fin:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <DatePicker fx:id="dateFinPicker" GridPane.rowIndex="4" GridPane.columnIndex="1"
+                    promptText="Sélectionnez la date" maxWidth="Infinity"/>
+
+        <!-- Barre de recherche pour les types -->
+        <Label text="Rechercher par type:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+        <TextField fx:id="searchField" GridPane.rowIndex="5" GridPane.columnIndex="1"
+                   promptText="Ex: Fumier, Paille..." onKeyReleased="#filterCollectes" />
+
+        <!-- Liste des collectes -->
+        <Label text="Sélectionner des collectes:" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+        <ListView fx:id="collecteListView" GridPane.rowIndex="6" GridPane.columnIndex="1"
+                  prefHeight="150" style="-fx-background-color: white; -fx-font-size: 14px;">
+            <placeholder>
+                <Label text="Aucune collecte disponible" />
+            </placeholder>
+        </ListView>
+
+        <!-- Image du recyclage -->
+        <Label text="Image recyclage:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+        <HBox spacing="10" GridPane.rowIndex="7" GridPane.columnIndex="1" alignment="CENTER_LEFT">
+            <Button text="Choisir une image" onAction="#choisirImage" fx:id="imageButton"
+                    style="-fx-background-color: #e0e0e0;"/>
+            <ImageView fx:id="imageView" fitHeight="80" fitWidth="80" preserveRatio="true" />
+            <Label fx:id="imagePathLabel" style="-fx-font-size: 12px; -fx-font-style: italic;" />
+        </HBox>
+    </GridPane>
+
+    <!-- Message d'erreur ou de confirmation -->
+    <Label fx:id="messageLabel" style="-fx-text-fill: #d32f2f; -fx-font-size: 14px;" />
+
+    <!-- Boutons d'action -->
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <padding>
+            <Insets top="10" />
+        </padding>
+        <Button text="Annuler" onAction="#annuler"
+                style="-fx-background-color: #e0e0e0; -fx-min-width: 100px;" />
+        <Button text="Enregistrer" onAction="#enregistrerRecyclage"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-min-width: 100px;" />
+    </HBox>
+
+</VBox>
