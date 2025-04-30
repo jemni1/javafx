@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="edu.connection.controllers.userProduit" prefWidth="1200" prefHeight="700" style="-fx-background-color: #f5f9f5;">
+
+    <!-- TOP NAVBAR - Version améliorée -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: linear-gradient(to right, #006400, #007000); -fx-padding: 0 20;">
+            <!-- Logo avec icône -->
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <ImageView fitWidth="40" fitHeight="40" preserveRatio="true">
+                    <image>
+                        <Image url="/logo.png"/>
+                    </image>
+                </ImageView>
+                <Label text="DataFarm" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: bold; -fx-font-family: 'Arial Rounded MT Bold';"/>
+            </HBox>
+
+            <!-- Menu de navigation -->
+            <HBox spacing="25" alignment="CENTER">
+                <Label text="Produits" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand; -fx-padding: 20 0;"/>
+                <Label fx:id="labelCommandes" text="Commandes" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand; -fx-padding: 20 0;"/>
+                <Label text="Réclamations" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand; -fx-padding: 20 0;"/>
+                <Label text="Collecte" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 16px; -fx-cursor: hand; -fx-padding: 20 0;"/>
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- Panier avec badge -->
+            <StackPane>
+                <Button fx:id="panierBtn" text="🛒 Panier" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold; -fx-padding: 10 20;"/>
+                <Circle radius="10" fill="#ff5722" stroke="white" strokeWidth="2" style="-fx-translate-x: 15; -fx-translate-y: -10;"/>
+                <Label text="0" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-translate-x: 15; -fx-translate-y: -10;"/>
+            </StackPane>
+        </HBox>
+    </top>
+
+    <!-- CENTER BODY - Version améliorée -->
+    <center>
+        <VBox spacing="20" style="-fx-padding: 30; -fx-background-color: #f5f9f5;">
+            <!-- Barre de recherche améliorée -->
+            <HBox spacing="15" alignment="CENTER" style="-fx-background-color: white; -fx-background-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,100,0,0.1), 5, 0, 0, 3);">
+                <TextField fx:id="searchNameField" promptText="Rechercher un produit..." style="-fx-pref-width: 300; -fx-background-radius: 5; -fx-font-size: 14;"/>
+                <TextField fx:id="minPriceField" promptText="Prix min" style="-fx-pref-width: 100; -fx-background-radius: 5; -fx-font-size: 14;"/>
+                <Label text="à" style="-fx-text-fill: #006400; -fx-font-weight: bold;"/>
+                <TextField fx:id="maxPriceField" promptText="Prix max" style="-fx-pref-width: 100; -fx-background-radius: 5; -fx-font-size: 14;"/>
+                <Button fx:id="searchButton" text="Rechercher" style="-fx-background-color: #006400; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 20;"/>
+            </HBox>
+
+            <!-- Grille de produits améliorée -->
+            <Label text="NOS PRODUITS" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #006400; -fx-padding: 0 0 10 0;"/>
+
+            <FlowPane fx:id="productsContainer" hgap="25" vgap="25" alignment="TOP_CENTER">
+                <!-- Exemple de carte produit -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,100,0,0.1), 10, 0, 0, 5); -fx-padding: 15;">
+                    <ImageView fitWidth="200" fitHeight="150" preserveRatio="true" style="-fx-background-color: #f0f0f0; -fx-background-radius: 5;"/>
+                    <Label text="Stock: 18" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-padding: 3 10; -fx-background-radius: 15; -fx-alignment: center; -fx-font-size: 12;"/>
+                    <Label text="Nom du produit" style="-fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Label text="23.99 €" style="-fx-text-fill: #006400; -fx-font-weight: bold; -fx-font-size: 18;"/>
+                    <HBox spacing="10" alignment="CENTER">
+                        <Spinner style="-fx-pref-width: 80;"/>
+                        <Button text="AJOUTER" style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                    </HBox>
+                </VBox>
+            </FlowPane>
+
+            <!-- Pagination améliorée -->
+            <HBox spacing="15" alignment="CENTER" style="-fx-padding: 20 0 0 0;">
+                <Button fx:id="prevButton" text="◄ Précédent" style="-fx-background-color: #006400; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+                <Label fx:id="pageLabel" text="Page 1 sur 5" style="-fx-text-fill: #006400; -fx-font-weight: bold;"/>
+                <Button fx:id="nextButton" text="Suivant ►" style="-fx-background-color: #006400; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 8 15;"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <!-- FOOTER - Nouvel élément -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #006400; -fx-padding: 15;">
+            <Label text="© 2023 DataFarm - Tous droits réservés" style="-fx-text-fill: white; -fx-font-size: 14;"/>
+        </HBox>
+    </bottom>
+</BorderPane>
