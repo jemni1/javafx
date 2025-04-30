@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f0f4f8, #e7f9e7);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connexion3a41.App.AdminController">
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="20" maxWidth="1000">
+                    <padding>
+                        <Insets top="30" right="30" bottom="30" left="30"/>
+                    </padding>
+
+                    <!-- Header Section -->
+                    <VBox spacing="8" alignment="CENTER">
+                        <!-- Logo -->
+                        <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                            <Image url="@/logo.png"/>
+                            <VBox.margin>
+                                <Insets bottom="10"/>
+                            </VBox.margin>
+                        </ImageView>
+                        <Text text="Admin Panel" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 28; -fx-fill: #2e7d32;"/>
+                        <Text text="Manage system users and permissions" style="-fx-font-family: 'Arial'; -fx-font-size: 16; -fx-fill: #546e7a;"/>
+                        <Rectangle width="100" height="4" fill="#66bb6a" arcWidth="4" arcHeight="4"/>
+                    </VBox>
+
+                    <!-- User Table Section -->
+                    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;" alignment="CENTER">
+                        <TableView fx:id="userTable" prefHeight="300.0" prefWidth="940.0" style="-fx-background-color: white;">
+                            <columns>
+                                <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" style="-fx-font-family: 'Arial'; -fx-text-fill: #333333;"/>
+                                <TableColumn fx:id="nameColumn" prefWidth="120.0" text="Name" style="-fx-font-family: 'Arial'; -fx-text-fill: #333333;"/>
+                                <TableColumn fx:id="surnameColumn" prefWidth="120.0" text="Surname" style="-fx-font-family: 'Arial'; -fx-text-fill: #333333;"/>
+                                <TableColumn fx:id="emailColumn" prefWidth="180.0" text="Email" style="-fx-font-family: 'Arial'; -fx-text-fill: #333333;"/>
+                                <TableColumn fx:id="usernameColumn" prefWidth="120.0" text="Username" style="-fx-font-family: 'Arial'; -fx-text-fill: #333333;"/>
+                                <TableColumn fx:id="cinColumn" prefWidth="100.0" text="CIN" style="-fx-font-family: 'Arial'; -fx-text-fill: #333333;"/>
+                                <TableColumn fx:id="roleColumn" prefWidth="120.0" text="Role" style="-fx-font-family: 'Arial'; -fx-text-fill: #333333;"/>
+                            </columns>
+                        </TableView>
+                    </VBox>
+
+                    <!-- User Details Section -->
+                    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;" alignment="CENTER">
+                        <Text text="User Details" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
+
+                        <!-- Profile Picture -->
+                        <VBox alignment="CENTER" spacing="10">
+                            <ImageView fx:id="profilePictureView" fitWidth="100" fitHeight="100" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10,0,0,3);"/>
+                            <Button fx:id="uploadPictureButton" onAction="#handleUploadPicture" text="Upload Picture" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-size: 12px; -fx-background-radius: 5; -fx-padding: 5 10;"/>
+                        </VBox>
+
+                        <!-- Form Grid -->
+                        <GridPane hgap="15" vgap="15" alignment="CENTER">
+                            <columnConstraints>
+                                <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+                                <ColumnConstraints minWidth="200"/>
+                                <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+                                <ColumnConstraints minWidth="200"/>
+                            </columnConstraints>
+
+                            <!-- Row 1 -->
+                            <Label text="First Name:" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <TextField fx:id="nameField" style="-fx-font-size: 14px; -fx-pref-width: 200; -fx-text-fill: #333333;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Last Name:" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                            <TextField fx:id="surnameField" style="-fx-font-size: 14px; -fx-pref-width: 200; -fx-text-fill: #333333;" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                            <!-- Row 2 -->
+                            <Label text="Email:" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <TextField fx:id="emailField" style="-fx-font-size: 14px; -fx-pref-width: 200; -fx-text-fill: #333333;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Label text="Username:" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                            <TextField fx:id="usernameField" style="-fx-font-size: 14px; -fx-pref-width: 200; -fx-text-fill: #333333;" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                            <!-- Row 3 -->
+                            <Label text="CIN:" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <TextField fx:id="cinField" style="-fx-font-size: 14px; -fx-pref-width: 200; -fx-text-fill: #333333;" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                            <Label text="Password:" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                            <PasswordField fx:id="passwordField" style="-fx-font-size: 14px; -fx-pref-width: 200; -fx-text-fill: #333333;" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+
+                            <!-- Row 4 -->
+                            <Label text="User Role:" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                            <ComboBox fx:id="roleComboBox" style="-fx-font-size: 14px; -fx-pref-width: 200; -fx-text-fill: #333333;" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                            <Label text="Security:" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                            <CheckBox fx:id="mfaCheckBox" text="Enable MFA" style="-fx-font-size: 14px; -fx-text-fill: #333333;" GridPane.rowIndex="3" GridPane.columnIndex="3" GridPane.halignment="LEFT"/>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- Action Buttons -->
+                    <VBox spacing="15" alignment="CENTER">
+                        <HBox spacing="15" alignment="CENTER">
+                            <Button fx:id="addButton" onAction="#handleAddUser" text="Add User" style="-fx-background-color: linear-gradient(to right, #66bb6a, #43a047); -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                            <Button fx:id="updateButton" onAction="#handleUpdateUser" text="Update User" disable="true" style="-fx-background-color: #ffa000; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                            <Button fx:id="deleteButton" onAction="#handleDeleteUser" text="Delete User" disable="true" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                        </HBox>
+                        <HBox spacing="15" alignment="CENTER">
+                            <Button fx:id="clearButton" onAction="#handleClearFields" text="Clear Fields" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                            <Button fx:id="dashboardButton" onAction="#handleDashboard" text="View Dashboard" style="-fx-background-color: #2196f3; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                            <Button onAction="#handleLogout" text="Logout" style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                        </HBox>
+                    </VBox>
+
+                    <!-- Status Label -->
+                    <Label fx:id="statusLabel" text="Status: Ready" style="-fx-font-size: 14px; -fx-text-fill: #4caf50; -fx-font-weight: bold;"/>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

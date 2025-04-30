@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f0f4f8, #e7f9e7);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connexion3a41.App.AdminDashboardController">
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <content>
+                <HBox alignment="CENTER">
+                    <VBox alignment="CENTER" spacing="20" maxWidth="1000">
+                        <padding>
+                            <Insets top="30" right="30" bottom="30" left="30"/>
+                        </padding>
+
+                        <!-- Header Section -->
+                        <VBox spacing="8" alignment="CENTER">
+                            <Text text="Admin Dashboard" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 28; -fx-fill: #2e7d32;"/>
+                            <Text text="Manage users and monitor system activity" style="-fx-font-family: 'Arial'; -fx-font-size: 16; -fx-fill: #546e7a;"/>
+                            <Rectangle width="100" height="4" fill="#66bb6a" arcWidth="4" arcHeight="4"/>
+                        </VBox>
+
+                        <!-- Stats Section -->
+                        <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;">
+                            <Text text="System Statistics" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
+
+                            <HBox spacing="30" alignment="CENTER">
+                                <VBox fx:id="rolePieChartBox" spacing="10" alignment="CENTER">
+                                    <PieChart fx:id="rolePieChart" prefHeight="250.0" prefWidth="350.0" title="User Role Distribution" style="-fx-font-family: 'Arial';"/>
+                                </VBox>
+
+                                <VBox spacing="15" alignment="CENTER_LEFT">
+                                    <Label fx:id="totalUsersLabel" text="Total Users: 0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;">
+                                        <font>
+                                            <Font size="16.0" name="Arial"/>
+                                        </font>
+                                    </Label>
+                                    <Label fx:id="activeConnectionsLabel" text="Active Connections: 0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;">
+                                        <font>
+                                            <Font size="16.0" name="Arial"/>
+                                        </font>
+                                    </Label>
+                                    <Label fx:id="totalLoginsLabel" text="Total Logins: 0" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;">
+                                        <font>
+                                            <Font size="16.0" name="Arial"/>
+                                        </font>
+                                    </Label>
+                                </VBox>
+                            </HBox>
+                        </VBox>
+
+                        <!-- Audit Log Section -->
+                        <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;">
+                            <Text text="Activity Log" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
+
+                            <TableView fx:id="auditLogTable" prefHeight="220.0" prefWidth="940.0" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);">
+                                <columns>
+                                    <TableColumn fx:id="logIdColumn" prefWidth="60.0" text="ID" style="-fx-font-family: 'Arial';"/>
+                                    <TableColumn fx:id="actionColumn" prefWidth="120.0" text="Action" style="-fx-font-family: 'Arial';"/>
+                                    <TableColumn fx:id="userEmailColumn" prefWidth="180.0" text="User Email" style="-fx-font-family: 'Arial';"/>
+                                    <TableColumn fx:id="dateColumn" prefWidth="130.0" text="Date" style="-fx-font-family: 'Arial';"/>
+                                    <TableColumn fx:id="detailsColumn" prefWidth="150.0" text="Details" style="-fx-font-family: 'Arial';"/>
+                                    <TableColumn fx:id="loginCountColumn" prefWidth="80.0" text="Logins" style="-fx-font-family: 'Arial';"/>
+                                    <TableColumn fx:id="lastLoginColumn" prefWidth="130.0" text="Last Login" style="-fx-font-family: 'Arial';"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <!-- Action Buttons -->
+                        <HBox spacing="20" alignment="CENTER">
+                            <Button text="Manage Users" style="-fx-background-color: linear-gradient(to right, #66bb6a, #43a047); -fx-text-fill: #333333; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                            <Button text="System Settings" style="-fx-background-color: #90caf9; -fx-text-fill: #333333; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                            <Button onAction="#handleBackToAdmin" text="Back to Admin Panel" style="-fx-background-color: #78909c; -fx-text-fill: #333333; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

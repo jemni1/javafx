@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" spacing="10" style="-fx-background-color: #e7f9e7;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connexion3a41.App.TermsScreenController">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+    <VBox fx:id="contentBox" maxWidth="500" spacing="10" style="-fx-background-color: white; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10,0,0,4);">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        <Label text="Conditions Générales d'Utilisation" style="-fx-font-family: System; -fx-font-weight: bold; -fx-font-size: 24;"/>
+
+        <ScrollPane fitToWidth="true">
+            <content>
+                <VBox spacing="10">
+                    <Label text="1. Préambule" style="-fx-font-family: System; -fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Text text="Les présentes conditions générales d'utilisation ('CGU') encadrent l'utilisation du logiciel DataFarm. En accédant à notre plateforme, vous acceptez sans réserve les présentes CGU." style="-fx-font-family: System; -fx-font-size: 14;"/>
+
+                    <Label text="2. Objet" style="-fx-font-family: System; -fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Text text="DataFarm est une solution visant à optimiser la gestion des activités agricoles tout en intégrant des principes de durabilité. Elle fournit des outils intelligents pour accompagner les exploitants agricoles dans leurs prises de décision." style="-fx-font-family: System; -fx-font-size: 14;"/>
+
+                    <Label text="3. Accès au Service" style="-fx-font-family: System; -fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Text text="L'utilisation de la plateforme est soumise à la création d'un compte utilisateur. L'utilisateur s'engage à fournir des informations exactes et à mettre à jour ses données si nécessaire." style="-fx-font-family: System; -fx-font-size: 14;"/>
+
+                    <Label text="4. Responsabilité de l'Utilisateur" style="-fx-font-family: System; -fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Text text="L'utilisateur s'engage à utiliser DataFarm dans le respect des lois et réglementations en vigueur. Toute utilisation frauduleuse, abusive ou contraire à l'éthique peut entraîner la suspension ou la suppression du compte." style="-fx-font-family: System; -fx-font-size: 14;"/>
+
+                    <Label text="5. Protection des Données" style="-fx-font-family: System; -fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Text text="Les informations personnelles collectées sont traitées conformément à notre politique de confidentialité. Aucune donnée ne sera partagée avec des tiers sans le consentement de l'utilisateur." style="-fx-font-family: System; -fx-font-size: 14;"/>
+
+                    <Label text="6. Modification des CGU" style="-fx-font-family: System; -fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Text text="DataFarm se réserve le droit de modifier les présentes CGU à tout moment. L'utilisateur sera informé de toute mise à jour et devra accepter les nouvelles conditions pour continuer à utiliser la plateforme." style="-fx-font-family: System; -fx-font-size: 14;"/>
+
+                    <Label text="7. Acceptation des Conditions" style="-fx-font-family: System; -fx-font-weight: bold; -fx-font-size: 16;"/>
+                    <Text text="En cochant la case 'J'accepte les termes et conditions', vous reconnaissez avoir lu, compris et accepté l'intégralité des présentes CGU." style="-fx-font-family: System; -fx-font-size: 14;"/>
+
+                    <Text text="Pour toute question, veuillez nous contacter à support@datafarm.com." style="-fx-font-family: System; -fx-font-size: 14;"/>
+                </VBox>
+            </content>
+        </ScrollPane>
+
+        <Button fx:id="backButton" text="Back to Register" prefWidth="200" style="-fx-background-color: #66bb6a; -fx-text-fill: white; -fx-font-size: 14;" onAction="#handleBack"/>
+    </VBox>
+</VBox>

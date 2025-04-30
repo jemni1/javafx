@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f0f4f8, #e7f9e7);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connexion3a41.App.LoginController">
+    <center>
+        <HBox alignment="CENTER">
+            <VBox alignment="CENTER" spacing="20" maxWidth="500">
+                <padding>
+                    <Insets top="30" right="30" bottom="30" left="30"/>
+                </padding>
+
+                <!-- Header Section -->
+                <VBox spacing="8" alignment="CENTER">
+                    <!-- Logo -->
+                    <ImageView fitWidth="150" fitHeight="50" preserveRatio="true">
+                        <Image url="@/logo.png"/>
+                        <VBox.margin>
+                            <Insets bottom="10"/>
+                        </VBox.margin>
+                    </ImageView>
+                    <Text text="Welcome Back" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 28; -fx-fill: #2e7d32;"/>
+                    <Text text="Sign in to continue" style="-fx-font-family: 'Arial'; -fx-font-size: 16; -fx-fill: #546e7a;"/>
+                    <Rectangle width="100" height="4" fill="#66bb6a" arcWidth="4" arcHeight="4"/>
+                </VBox>
+
+                <!-- Form Container -->
+                <VBox fx:id="formBox" spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;">
+                    <Label fx:id="errorLabel" textFill="#d32f2f" visible="false" style="-fx-font-size: 14;"/>
+
+                    <!-- Account Details Section -->
+                    <VBox spacing="10">
+                        <TextField fx:id="emailField" promptText="Email Address" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;"/>
+                        <PasswordField fx:id="passwordField" promptText="Password" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;"/>
+                    </VBox>
+
+                    <!-- Sign In Button -->
+                    <Button fx:id="signInButton" text="SIGN IN" prefWidth="300" style="-fx-background-color: linear-gradient(to right, #66bb6a, #43a047); -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 12;" onAction="#handleSignIn"/>
+
+                    <!-- Social Login Section -->
+                    <HBox alignment="CENTER">
+                        <Text text="OR" style="-fx-fill: #546e7a; -fx-font-size: 12;">
+                            <HBox.margin>
+                                <Insets top="10" bottom="10"/>
+                            </HBox.margin>
+                        </Text>
+                    </HBox>
+
+                    <HBox alignment="CENTER" spacing="10">
+                        <Button fx:id="gmailButton" text="CONNECT WITH GMAIL" prefWidth="200" style="-fx-background-color: #DB4437; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" onAction="#handleGmailSignIn"/>
+                        <Button fx:id="faceLoginButton" text="FACE LOGIN" prefWidth="100" style="-fx-background-color: #4285F4; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" onAction="#handleFaceLogin"/>
+                    </HBox>
+
+                    <!-- Webcam view for face recognition -->
+                    <ImageView fx:id="webcamView" fitWidth="200" fitHeight="150" preserveRatio="true" visible="false">
+                        <VBox.margin>
+                            <Insets top="10" bottom="10"/>
+                        </VBox.margin>
+                    </ImageView>
+
+                    <!-- Options Section -->
+                    <HBox alignment="CENTER" spacing="20">
+                        <CheckBox fx:id="rememberMe" text="Keep me signed in" style="-fx-font-size: 14; -fx-text-fill: #546e7a;"/>
+                        <Hyperlink fx:id="forgotPassword" text="Forgot password?" onAction="#handleForgotPassword" style="-fx-font-size: 14;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- Footer Section -->
+                <HBox alignment="CENTER" spacing="5">
+                    <Text text="Don't have an account?" style="-fx-font-size: 14; -fx-fill: #546e7a;"/>
+                    <Hyperlink fx:id="registerLink" text="Register" onAction="#handleRegister" style="-fx-font-size: 14;"/>
+                </HBox>
+            </VBox>
+        </HBox>
+    </center>
+</BorderPane>

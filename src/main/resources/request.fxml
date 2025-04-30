@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
+<?import java.lang.String?>
+
+<?import javafx.scene.control.ScrollPane?>
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f0f4f8, #e7f9e7);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connexion3a41.App.RequestController">
+    <center>
+        <!-- ScrollPane for centering and responsiveness -->
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <content>
+                <!-- Main container with centered alignment -->
+                <HBox alignment="CENTER">
+                    <VBox alignment="CENTER" spacing="20" maxWidth="500">
+                        <padding>
+                            <Insets top="30" right="30" bottom="30" left="30"/>
+                        </padding>
+
+                        <!-- Header Section -->
+                        <VBox spacing="8" alignment="CENTER">
+                            <Text text="Password Reset" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 28; -fx-fill: #2e7d32;"/>
+                            <Text text="Enter your email address to receive a reset code" style="-fx-font-family: 'Arial'; -fx-font-size: 16; -fx-fill: #546e7a;"/>
+                            <Rectangle width="100" height="4" fill="#66bb6a" arcWidth="4" arcHeight="4"/>
+                        </VBox>
+
+                        <!-- Form Container -->
+                        <VBox fx:id="formBox" spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;">
+                            <!-- Error Message -->
+                            <Label fx:id="errorLabel" text="" textFill="#d32f2f" visible="false" style="-fx-font-size: 14;"/>
+
+                            <!-- Email Input Section -->
+                            <VBox spacing="10">
+                                <Text text="Email Address" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
+                                <TextField fx:id="emailField" promptText="Enter your email address" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                    <tooltip>
+                                        <Tooltip text="Enter a valid email address"/>
+                                    </tooltip>
+                                </TextField>
+                                <Text fx:id="emailHint" text="We'll send a reset code to this email" style="-fx-fill: #78909c; -fx-font-size: 12;"/>
+                            </VBox>
+
+                            <!-- Submit Button -->
+                            <Button fx:id="sendResetButton" text="Send Reset Code" prefWidth="300" style="-fx-background-color: linear-gradient(to right, #66bb6a, #43a047); -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 12;" onAction="#sendResetCode">
+                                <styleClass>
+                                    <String fx:value="btn-primary"/>
+                                </styleClass>
+                                <tooltip>
+                                    <Tooltip text="Send the password reset code"/>
+                                </tooltip>
+                            </Button>
+                        </VBox>
+                    </VBox>
+                </HBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

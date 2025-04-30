@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f0f4f8, #e7f9e7);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connexion3a41.App.RegisterScreenController">
+    <center>
+        <!-- ScrollPane with both horizontal and vertical centering -->
+        <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
+            <content>
+                <!-- Main container with explicit centering alignment -->
+                <HBox alignment="CENTER">
+                    <VBox alignment="CENTER" spacing="20" maxWidth="500">
+                        <padding>
+                            <Insets top="30" right="30" bottom="30" left="30"/>
+                        </padding>
+
+                        <!-- Header Section -->
+                        <VBox spacing="8" alignment="CENTER">
+                            <Text text="Create Your Account" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 28; -fx-fill: #2e7d32;"/>
+                            <Text text="Join our community in just a few steps" style="-fx-font-family: 'Arial'; -fx-font-size: 16; -fx-fill: #546e7a;"/>
+                            <Rectangle width="100" height="4" fill="#66bb6a" arcWidth="4" arcHeight="4"/>
+                        </VBox>
+
+                        <!-- Form Container -->
+                        <VBox fx:id="formBox" spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;">
+                            <!-- Error Message Label -->
+                            <!-- Error Message Label -->
+                            <!-- Error Message Label -->
+                            <!-- Error Message Label - Fixed Version -->
+                            <Label fx:id="messageLabel"
+                                   style="-fx-text-fill: #ff0000; -fx-font-weight: bold; -fx-font-size: 14; -fx-padding: 5 0;"
+                                   visible="false"
+                                   wrapText="true"/>
+                            <!-- Personal Information Section -->
+                            <VBox spacing="10">
+                                <Text text="Personal Information" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
+                                <HBox spacing="10" alignment="CENTER">
+                                    <TextField fx:id="nameField" promptText="First Name" prefWidth="240" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                        <tooltip>
+                                            <Tooltip text="Enter your first name (minimum 2 characters)"/>
+                                        </tooltip>
+                                    </TextField>
+                                    <TextField fx:id="surnameField" promptText="Last Name" prefWidth="240" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                        <tooltip>
+                                            <Tooltip text="Enter your last name (minimum 2 characters)"/>
+                                        </tooltip>
+                                    </TextField>
+                                </HBox>
+                                <Text fx:id="nameHint" text="Minimum 2 characters for both names" style="-fx-fill: #78909c; -fx-font-size: 12;"/>
+
+                                <TextField fx:id="cinField" promptText="CIN Number" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                    <tooltip>
+                                        <Tooltip text="Enter exactly 8 digits for CIN"/>
+                                    </tooltip>
+                                </TextField>
+                                <Text fx:id="cinHint" text="Exactly 8 digits" style="-fx-fill: #78909c; -fx-font-size: 12;"/>
+                            </VBox>
+
+                            <!-- Account Details Section -->
+                            <VBox spacing="10">
+                                <Text text="Account Details" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
+                                <TextField fx:id="usernameField" promptText="Username" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                    <tooltip>
+                                        <Tooltip text="3+ characters including at least one number"/>
+                                    </tooltip>
+                                </TextField>
+                                <Text fx:id="usernameHint" text="3+ characters, include a number" style="-fx-fill: #78909c; -fx-font-size: 12;"/>
+
+                                <TextField fx:id="emailField" promptText="Email Address" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                    <tooltip>
+                                        <Tooltip text="Enter a valid email address"/>
+                                    </tooltip>
+                                </TextField>
+
+                                <!-- Fixed ComboBox without directly initializing items -->
+                                <ComboBox fx:id="rolesCombo" promptText="Select Role" prefWidth="300" style="-fx-background-radius: 5;">
+                                    <tooltip>
+                                        <Tooltip text="Select your role in the platform"/>
+                                    </tooltip>
+                                </ComboBox>
+                            </VBox>
+
+                            <!-- Profile Picture Section -->
+                            <VBox spacing="10">
+                                <Text text="Profile Picture" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
+                                <HBox spacing="10" alignment="CENTER_LEFT">
+                                    <Button fx:id="profilePicButton" text="Choose Image" prefWidth="150" style="-fx-background-color: #90caf9; -fx-text-fill: white; -fx-background-radius: 5; -fx-font-size: 14;" onAction="#chooseProfilePicture">
+                                        <tooltip>
+                                            <Tooltip text="Select a JPEG/PNG image (max 2MB)"/>
+                                        </tooltip>
+                                    </Button>
+                                    <Label fx:id="profilePicLabel" text="No file chosen" style="-fx-font-size: 14;"/>
+                                </HBox>
+                                <Text fx:id="profilePicHint" text="JPEG/PNG (Max 2MB)" style="-fx-fill: #78909c; -fx-font-size: 12;"/>
+                            </VBox>
+
+                            <!-- Security Section -->
+                            <VBox spacing="10">
+                                <Text text="Security" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
+                                <PasswordField fx:id="passwordField" promptText="Password" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                    <tooltip>
+                                        <Tooltip text="8+ characters with uppercase, lowercase, number, and symbol"/>
+                                    </tooltip>
+                                </PasswordField>
+                                <Text fx:id="passwordHint" text="8+ chars with uppercase, lowercase, number, symbol" style="-fx-fill: #78909c; -fx-font-size: 12;"/>
+
+                                <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                    <tooltip>
+                                        <Tooltip text="Re-enter your password to confirm"/>
+                                    </tooltip>
+                                </PasswordField>
+
+                                <CheckBox fx:id="mfaCheckBox" text="Enable Two-Factor Authentication (MFA)" style="-fx-font-size: 14; -fx-text-fill: #546e7a;">
+                                    <tooltip>
+                                        <Tooltip text="Enhance account security with MFA"/>
+                                    </tooltip>
+                                </CheckBox>
+                            </VBox>
+
+                            <VBox spacing="15" alignment="CENTER">
+                                <HBox fx:id="termsBox" alignment="CENTER_LEFT" spacing="5">
+                                    <CheckBox fx:id="termsCheckBox" style="-fx-font-size: 14;"/>
+                                    <Text text="I agree to the " style="-fx-font-size: 14; -fx-fill: #546e7a;"/>
+                                    <Hyperlink fx:id="termsLink" text="Terms and Conditions" onAction="#showTermsDialog" style="-fx-font-size: 14;"/>
+                                </HBox>
+
+                                <Button fx:id="registerButton" text="Create Account" prefWidth="300" style="-fx-background-color: linear-gradient(to right, #66bb6a, #43a047); -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 12;" onAction="#register">
+                                    <styleClass>
+                                        <String fx:value="register-button"/>
+                                    </styleClass>
+                                    <tooltip>
+                                        <Tooltip text="Submit your registration"/>
+                                    </tooltip>
+                                </Button>
+                            </VBox>
+                        </VBox>
+
+                        <!-- Footer Section -->
+                        <HBox alignment="CENTER" spacing="5">
+                            <Text text="Already have an account?" style="-fx-font-size: 14; -fx-fill: #546e7a;"/>
+                            <Hyperlink fx:id="loginLink" text="Sign In" onAction="#showLoginScreen" style="-fx-font-size: 14;"/>
+                        </HBox>
+                    </VBox>
+                </HBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
