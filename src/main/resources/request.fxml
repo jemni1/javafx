@@ -11,14 +11,12 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.shape.Rectangle?>
 <?import java.lang.String?>
-
 <?import javafx.scene.control.ScrollPane?>
+
 <BorderPane style="-fx-background-color: linear-gradient(to bottom, #f0f4f8, #e7f9e7);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connexion3a41.App.RequestController">
     <center>
-        <!-- ScrollPane for centering and responsiveness -->
         <ScrollPane fitToWidth="true" style="-fx-background: transparent; -fx-background-color: transparent;">
             <content>
-                <!-- Main container with centered alignment -->
                 <HBox alignment="CENTER">
                     <VBox alignment="CENTER" spacing="20" maxWidth="500">
                         <padding>
@@ -32,29 +30,44 @@
                             <Rectangle width="100" height="4" fill="#66bb6a" arcWidth="4" arcHeight="4"/>
                         </VBox>
 
-                        <!-- Form Container -->
-                        <VBox fx:id="formBox" spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;">
-                            <!-- Error Message -->
-                            <Label fx:id="errorLabel" text="" textFill="#d32f2f" visible="false" style="-fx-font-size: 14;"/>
+                        <!-- Form Container - Tightened spacing here -->
+                        <VBox fx:id="formBox" spacing="8" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 15,0,0,5); -fx-padding: 30;">
+                            <!-- Error Message (Red) - Minimal padding -->
+                            <Label fx:id="errorLabel" text=""
+                                   style="-fx-text-fill: #ff0000; -fx-font-weight: bold; -fx-font-size: 14; -fx-padding: 0 0 5 0;"
+                                   visible="false"
+                                   wrapText="true"/>
 
-                            <!-- Email Input Section -->
-                            <VBox spacing="10">
+                            <!-- Success Message (Green) -->
+                            <Label fx:id="successLabel" text=""
+                                   style="-fx-text-fill: #00aa00; -fx-font-weight: bold; -fx-font-size: 14; -fx-padding: 5 0;"
+                                   visible="false"
+                                   wrapText="true"/>
+
+                            <!-- Email Input Section - Compact layout -->
+                            <VBox spacing="0">
                                 <Text text="Email Address" style="-fx-font-family: 'Arial'; -fx-font-weight: bold; -fx-font-size: 18; -fx-fill: #2e7d32;"/>
-                                <TextField fx:id="emailField" promptText="Enter your email address" prefWidth="300" style="-fx-background-radius: 5; -fx-font-size: 14;">
+                                <TextField fx:id="emailField" promptText="Email Address" prefWidth="150" style="-fx-background-radius: 5; -fx-font-size: 14;">
                                     <tooltip>
                                         <Tooltip text="Enter a valid email address"/>
                                     </tooltip>
                                 </TextField>
-                                <Text fx:id="emailHint" text="We'll send a reset code to this email" style="-fx-fill: #78909c; -fx-font-size: 12;"/>
+                                <!-- Optional hint text (more compact) -->
+                                <Text text="We'll send a reset code to this email"
+                                      style="-fx-fill: #78909c; -fx-font-size: 11; -fx-padding: 2 0 0 0;"/>
                             </VBox>
 
                             <!-- Submit Button -->
-                            <Button fx:id="sendResetButton" text="Send Reset Code" prefWidth="300" style="-fx-background-color: linear-gradient(to right, #66bb6a, #43a047); -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 12;" onAction="#sendResetCode">
-                                <styleClass>
-                                    <String fx:value="btn-primary"/>
-                                </styleClass>
+                            <Button text="Send Reset Code" prefWidth="300" style="-fx-background-color: linear-gradient(to right, #66bb6a, #43a047); -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 12;" onAction="#sendResetCode">
                                 <tooltip>
                                     <Tooltip text="Send the password reset code"/>
+                                </tooltip>
+                            </Button>
+
+                            <!-- Back to Login Button -->
+                            <Button text="Back to Login" prefWidth="300" style="-fx-background-color: transparent; -fx-text-fill: #2e7d32; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10; -fx-border-color: #2e7d32; -fx-border-width: 1;" onAction="#backToLogin">
+                                <tooltip>
+                                    <Tooltip text="Return to the login page"/>
                                 </tooltip>
                             </Button>
                         </VBox>

@@ -1,11 +1,13 @@
 package edu.connexion3a41.App;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
@@ -13,11 +15,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class AdminDashboardController implements Initializable {
@@ -27,9 +34,6 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private TableView<AuditLog> auditLogTable;
-
-    @FXML
-    private TableColumn<AuditLog, Integer> logIdColumn;
 
     @FXML
     private TableColumn<AuditLog, String> actionColumn;
@@ -85,13 +89,12 @@ public class AdminDashboardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // Initialize audit log table columns
-        logIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         actionColumn.setCellValueFactory(new PropertyValueFactory<>("action"));
         userEmailColumn.setCellValueFactory(new PropertyValueFactory<>("userEmail"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         detailsColumn.setCellValueFactory(new PropertyValueFactory<>("details"));
         loginCountColumn.setCellValueFactory(new PropertyValueFactory<>("loginCount"));
-        lastLoginColumn.setCellValueFactory(new PropertyValueFactory<>("lastLogin")); // Fixed typo
+        lastLoginColumn.setCellValueFactory(new PropertyValueFactory<>("lastLogin"));
 
         // Load statistics and audit logs
         loadStatistics();
@@ -126,6 +129,7 @@ public class AdminDashboardController implements Initializable {
             totalUsersLabel.setText("Error loading images: " + e.getMessage());
         }
     }
+
     public void createAuditLog(String action, String userEmail, String details, String ipAddress, String status) {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(
@@ -144,6 +148,7 @@ public class AdminDashboardController implements Initializable {
             e.printStackTrace();
         }
     }
+
     private void loadStatistics() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement stmt = conn.createStatement()) {
@@ -166,16 +171,93 @@ public class AdminDashboardController implements Initializable {
                 totalLoginsLabel.setText("Total Logins: " + rs.getInt(1));
             }
 
-            // Role distribution
+            // Role distribution - with improved handling
             ObservableList<PieChart.Data> roleData = FXCollections.observableArrayList();
             rs = stmt.executeQuery("SELECT roles, COUNT(*) as count FROM user WHERE email != 'Admin@datafarm.com' GROUP BY roles");
+
+            int totalUsers = 0;
+            Map<String, Integer> roleCounts = new HashMap<>();
+
+            // First pass to collect data and calculate total
             while (rs.next()) {
                 String role = rs.getString("roles").replaceAll("\\[|\\]|\"", "");
                 int count = rs.getInt("count");
+                if (count > 0) {  // Only consider roles with users
+                    roleCounts.put(role, count);
+                    totalUsers += count;
+                }
+            }
+
+            // Second pass to create pie chart data without combining small slices
+            for (Map.Entry<String, Integer> entry : roleCounts.entrySet()) {
+                String role = entry.getKey();
+                int count = entry.getValue();
                 roleData.add(new PieChart.Data(role, count));
             }
+
             rolePieChart.setData(roleData);
             rolePieChart.setTitle("User Role Distribution");
+
+            // Configure pie chart appearance
+            rolePieChart.setLabelsVisible(true);
+            rolePieChart.setLegendVisible(true);
+            rolePieChart.setLabelLineLength(15);
+
+            // Apply custom colors for better visual distinction (optional)
+            String[] pieColors = {
+                    "rgba(231, 76, 60, 1.0)",
+                    "rgba(52, 152, 219, 1.0)",
+                    "rgba(46, 204, 113, 1.0)",
+                    "rgba(241, 196, 15, 1.0)",
+                    "rgba(155, 89, 182, 1.0)"
+            };
+
+            // Add visible labels with percentage for ALL slices
+            int colorIndex = 0;
+            for (final PieChart.Data data : rolePieChart.getData()) {
+                double percentage = (data.getPieValue() / totalUsers) * 100;
+                String percentageText = String.format("%.1f%%", percentage);
+
+                // Apply custom colors (optional)
+                if (colorIndex < pieColors.length) {
+                    data.getNode().setStyle("-fx-pie-color: " + pieColors[colorIndex]);
+                    colorIndex++;
+                }
+
+                // Add event listener to display labels after chart is rendered
+                Platform.runLater(() -> {
+                    // Create a text node for label
+                    Text dataText = new Text(data.getName() + ": " + percentageText);
+                    dataText.setStyle("-fx-font-size: 11px; -fx-font-weight: bold;");
+
+                    // Create container for placing label
+                    StackPane labelContainer = new StackPane();
+                    labelContainer.getChildren().add(dataText);
+                    labelContainer.setTranslateX(data.getNode().getBoundsInParent().getCenterX());
+                    labelContainer.setTranslateY(data.getNode().getBoundsInParent().getCenterY() - 30);
+
+                    // Add label directly to the chart's scene without casting the parent
+                    // First check if the pie chart is in a scene
+                    if (rolePieChart.getScene() != null) {
+                        Pane chartParent = (Pane) rolePieChart.getParent();
+                        chartParent.getChildren().add(labelContainer);
+                    }
+
+                    // Create a tooltip for more details
+                    Tooltip tooltip = new Tooltip(data.getName() + ": " + (int)data.getPieValue() + " users (" + percentageText + ")");
+                    Tooltip.install(data.getNode(), tooltip);
+
+                    // Add a click event to highlight the segment (optional)
+                    data.getNode().setOnMouseClicked(event -> {
+                        for (PieChart.Data d : rolePieChart.getData()) {
+                            d.getNode().setScaleX(1.0);
+                            d.getNode().setScaleY(1.0);
+                        }
+                        data.getNode().setScaleX(1.1);
+                        data.getNode().setScaleY(1.1);
+                    });
+                });
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -187,7 +269,7 @@ public class AdminDashboardController implements Initializable {
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(
-                     "SELECT al.id, al.action, al.user_email, al.date, al.details, " +
+                     "SELECT al.action, al.user_email, al.date, al.details, " +
                              "u.roles, u.is_mfa_enabled, " +
                              "u.login_count, u.last_login " +
                              "FROM audit_log al " +
@@ -214,7 +296,6 @@ public class AdminDashboardController implements Initializable {
                 );
 
                 AuditLog log = new AuditLog(
-                        rs.getInt("id"),
                         action,
                         userEmail,
                         rs.getTimestamp("date"),
@@ -267,7 +348,6 @@ public class AdminDashboardController implements Initializable {
     }
 
     public static class AuditLog {
-        private final int id;
         private final String action;
         private final String userEmail;
         private final Timestamp date;
@@ -275,8 +355,7 @@ public class AdminDashboardController implements Initializable {
         private final int loginCount;
         private final Timestamp lastLogin;
 
-        public AuditLog(int id, String action, String userEmail, Timestamp date, String details, int loginCount, Timestamp lastLogin) {
-            this.id = id;
+        public AuditLog(String action, String userEmail, Timestamp date, String details, int loginCount, Timestamp lastLogin) {
             this.action = action;
             this.userEmail = userEmail;
             this.date = date;
@@ -285,7 +364,6 @@ public class AdminDashboardController implements Initializable {
             this.lastLogin = lastLogin;
         }
 
-        public int getId() { return id; }
         public String getAction() { return action; }
         public String getUserEmail() { return userEmail; }
         public Timestamp getDate() { return date; }

@@ -22,9 +22,12 @@ public class VerifyController {
     @FXML
     public void verifyCode() throws Exception {
         String enteredCode = codeField.getText().trim();
+
+        // Reset error state
+        errorLabel.setVisible(false);
+
         if (!enteredCode.matches("\\d{6}")) {
-            errorLabel.setText("Please enter a 6-digit code");
-            errorLabel.setVisible(true);
+            showError("Please enter a 6-digit code");
             return;
         }
 
@@ -36,31 +39,31 @@ public class VerifyController {
         System.out.println("Entered code: " + enteredCode + ", Stored code: " + storedCode + ", Expires at: " + expiresAt);
 
         if (storedCode == null) {
-            errorLabel.setText("No verification code found for email");
-            errorLabel.setVisible(true);
+            showError("No verification code found for email");
             return;
         }
 
         if (expiresAt != null) {
             Timestamp expires = Timestamp.valueOf(expiresAt);
             if (System.currentTimeMillis() > expires.getTime()) {
-                errorLabel.setText("Verification code has expired");
-                errorLabel.setVisible(true);
+                showError("Verification code has expired");
                 return;
             }
         }
 
         if (enteredCode.equals(storedCode)) {
-            System.out.println("Loading reset.fxml...");
             Parent root = FXMLLoader.load(getClass().getResource("/reset.fxml"));
-            System.out.println("reset.fxml loaded successfully");
             Stage stage = (Stage) codeField.getScene().getWindow();
             stage.setScene(new Scene(root, 500, 400));
             stage.setTitle("Reset Password");
         } else {
-            errorLabel.setText("Invalid verification code");
-            errorLabel.setVisible(true);
+            showError("Invalid verification code");
         }
+    }
+
+    private void showError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
     }
 
     private String[] getVerificationCodeFromDatabase(String email) throws Exception {
@@ -80,5 +83,13 @@ public class VerifyController {
             }
         }
         return new String[]{null, null};
+    }
+
+    @FXML
+    public void backToRequest() throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/request.fxml"));
+        Stage stage = (Stage) codeField.getScene().getWindow();
+        stage.setScene(new Scene(root, 500, 400));
+        stage.setTitle("Password Reset");
     }
 }

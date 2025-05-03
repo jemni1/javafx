@@ -25,6 +25,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
 import java.util.Base64;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 // OpenCV imports
@@ -57,6 +58,9 @@ public class LoginController {
     private CascadeClassifier faceCascade;
     private static final double FACE_SIMILARITY_THRESHOLD = 0.1; // 10% threshold for face similarity
 
+    // Session management
+    private String currentSessionId;
+
     @FXML
     private void initialize() {
         // Initialize the face recognition components
@@ -85,6 +89,8 @@ public class LoginController {
 
         try {
             if (verifyCredentials(email, password)) {
+                // Create session
+                currentSessionId = SessionManager.getInstance().createSession(email);
                 if (isMfaEnabled(email)) {
                     String verificationCode = generateRandomCode();
                     storeVerificationCode(email, verificationCode);
@@ -120,8 +126,16 @@ public class LoginController {
             oauthService.startOAuthFlow(new GoogleOAuthService.AuthCallback() {
                 @Override
                 public void onSuccess() {
-                    logAuthEvent("OAUTH_LOGIN", "[OAuth User]", "Successful Google login", "SUCCESS");
-                    showHomeScreen();
+                    String email = emailField.getText().trim(); // Assuming email is available
+                    try {
+                        currentSessionId = SessionManager.getInstance().createSession(email);
+                        logAuthEvent("OAUTH_LOGIN", email, "Successful Google login", "SUCCESS");
+                        showHomeScreen();
+                    } catch (SQLException e) {
+                        errorLabel.setText("Session creation error: " + e.getMessage());
+                        errorLabel.setVisible(true);
+                        logAuthEvent("OAUTH_LOGIN_ERROR", email, "Session creation error: " + e.getMessage(), "ERROR");
+                    }
                 }
 
                 @Override
@@ -236,6 +250,7 @@ public class LoginController {
                                 Platform.runLater(() -> {
                                     try {
                                         emailField.setText(matchedEmail);
+                                        currentSessionId = SessionManager.getInstance().createSession(matchedEmail);
                                         logAuthEvent("FACE_LOGIN", matchedEmail, "Face recognition successful", "SUCCESS");
 
                                         if (isMfaEnabled(matchedEmail)) {
@@ -371,6 +386,7 @@ public class LoginController {
 
         return matchedEmail;
     }
+
     private double compareFaces(Mat face1, Mat face2) {
         Mat result = new Mat();
         Mat normalizedFace1 = new Mat();
@@ -473,6 +489,7 @@ public class LoginController {
             });
         }
     }
+
     private boolean verifyPassword(String inputPassword, String storedPassword) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String[] parts = storedPassword.split(":");
         if (parts.length != 2) {
@@ -566,6 +583,14 @@ public class LoginController {
 
     private void showHomeScreen() {
         try {
+            // Validate session before showing home screen
+            if (!SessionManager.getInstance().isValidSession(currentSessionId)) {
+                errorLabel.setText("Session invalid. Please log in again.");
+                errorLabel.setVisible(true);
+                logAuthEvent("SESSION_INVALID", emailField.getText().trim(), "Invalid session detected", "FAILURE");
+                return;
+            }
+
             String email = emailField.getText().trim();
             Stage stage = (Stage) emailField.getScene().getWindow();
 
@@ -574,24 +599,29 @@ public class LoginController {
                 Parent root = loader.load();
                 stage.setScene(new Scene(root, 900, 600));
                 stage.setTitle("Admin Dashboard");
-                logAuthEvent("ADMIN_LOGIN", email, "Redirected to Admin Dashboard", "SUCCESS");
+                logAuthEvent("ADMIN_LOGIN", email, "Redirected to Admin Dashboard with session: " + currentSessionId, "SUCCESS");
                 System.out.println("Redirected to Admin Dashboard for: " + email);
             } else {
                 VBox root = new VBox(20);
                 root.setAlignment(Pos.CENTER);
                 root.setPadding(new Insets(20));
-                Label successLabel = new Label("Login Successful for " + email);
+                Label successLabel = new Label("Login Successful for " + email + " (Session: " + currentSessionId + ")");
                 successLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
                 root.getChildren().add(successLabel);
                 stage.setScene(new Scene(root, 800, 600));
                 stage.setTitle("Home");
-                logAuthEvent("USER_LOGIN", email, "Displayed home screen", "SUCCESS");
+                logAuthEvent("USER_LOGIN", email, "Displayed home screen with session: " + currentSessionId, "SUCCESS");
                 System.out.println("Displayed home screen for: " + email);
             }
         } catch (IOException e) {
             errorLabel.setText("Error loading screen: " + e.getMessage());
             errorLabel.setVisible(true);
             logAuthEvent("SCREEN_LOAD_ERROR", emailField.getText().trim(), "Error loading screen: " + e.getMessage(), "ERROR");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            errorLabel.setText("Session validation error: " + e.getMessage());
+            errorLabel.setVisible(true);
+            logAuthEvent("SESSION_ERROR", emailField.getText().trim(), "Session validation error: " + e.getMessage(), "ERROR");
             e.printStackTrace();
         } catch (Exception e) {
             errorLabel.setText("Unexpected error: " + e.getMessage());
@@ -602,7 +632,19 @@ public class LoginController {
     }
 
     public void logLogout(String email) {
-        logAuthEvent("LOGOUT", email, "User logged out", "INFO");
+        try {
+            if (currentSessionId != null) {
+                SessionManager.getInstance().invalidateSession(currentSessionId);
+                logAuthEvent("LOGOUT", email, "User logged out, session invalidated: " + currentSessionId, "INFO");
+                currentSessionId = null;
+            } else {
+                logAuthEvent("LOGOUT", email, "User logged out, no active session", "INFO");
+            }
+        } catch (SQLException e) {
+            errorLabel.setText("Error invalidating session: " + e.getMessage());
+            errorLabel.setVisible(true);
+            logAuthEvent("LOGOUT_ERROR", email, "Error invalidating session: " + e.getMessage(), "ERROR");
+        }
     }
 
     @Override
@@ -613,8 +655,85 @@ public class LoginController {
     public void setStage(Stage stage) {
         stage.setOnCloseRequest(event -> {
             stopCamera();
-            logAuthEvent("APP_CLOSE", emailField.getText().trim(), "Application closed, camera stopped", "INFO");
+            try {
+                if (currentSessionId != null) {
+                    SessionManager.getInstance().invalidateSession(currentSessionId);
+                    logAuthEvent("APP_CLOSE", emailField.getText().trim(), "Application closed, session invalidated: " + currentSessionId, "INFO");
+                } else {
+                    logAuthEvent("APP_CLOSE", emailField.getText().trim(), "Application closed, no active session", "INFO");
+                }
+            } catch (SQLException e) {
+                System.err.println("Error invalidating session on app close: " + e.getMessage());
+            }
             System.out.println("Application closing, camera stopped");
         });
+    }
+
+    // Session Manager Singleton
+    public static class SessionManager {
+        private static SessionManager instance;
+        private static final String URL = "jdbc:mysql://localhost:3306/data?useSSL=false&serverTimezone=UTC";
+        private static final String USER = "root";
+        private static final String PASSWORD = "";
+
+        private SessionManager() {
+        }
+
+        public static synchronized SessionManager getInstance() {
+            if (instance == null) {
+                instance = new SessionManager();
+            }
+            return instance;
+        }
+
+        public String createSession(String email) throws SQLException {
+            String sessionId = UUID.randomUUID().toString();
+            String sql = "INSERT INTO sessions (session_id, user_email) VALUES (?, ?)";
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, sessionId);
+                pstmt.setString(2, email);
+                pstmt.executeUpdate();
+                System.out.println("Session created in DB: " + sessionId + " for " + email);
+                return sessionId;
+            }
+        }
+
+        public boolean isValidSession(String sessionId) throws SQLException {
+            String sql = "SELECT user_email FROM sessions WHERE session_id = ?";
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, sessionId);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return true;
+                }
+                System.out.println("Session invalid: " + sessionId);
+                return false;
+            }
+        }
+
+        public void invalidateSession(String sessionId) throws SQLException {
+            String sql = "DELETE FROM sessions WHERE session_id = ?";
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, sessionId);
+                pstmt.executeUpdate();
+                System.out.println("Session invalidated in DB: " + sessionId);
+            }
+        }
+
+        public String getEmailForSession(String sessionId) throws SQLException {
+            String sql = "SELECT user_email FROM sessions WHERE session_id = ?";
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, sessionId);
+                ResultSet rs = pstmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getString("user_email");
+                }
+                return null;
+            }
+        }
     }
 }

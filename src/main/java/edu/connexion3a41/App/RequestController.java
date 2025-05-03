@@ -2,6 +2,7 @@ package edu.connexion3a41.App;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.*;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,6 +25,8 @@ public class RequestController {
     private TextField emailField;
     @FXML
     private Label errorLabel;
+    @FXML
+    private Label successLabel;
 
     private static String storedEmail;
     private static String verificationCode;
@@ -74,6 +78,11 @@ public class RequestController {
     @FXML
     public void sendResetCode() {
         String email = emailField.getText().trim();
+
+        // Reset message states
+        errorLabel.setVisible(false);
+        successLabel.setVisible(false);
+
         if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
             errorLabel.setText("Invalid email format");
             errorLabel.setVisible(true);
@@ -87,12 +96,32 @@ public class RequestController {
             saveVerificationCode(email, verificationCode);
             String username = getUsername(email);
             sendEmailStatic(email, username, verificationCode);
-            switchToVerifyScene();
+
+            // Show success message
+            successLabel.setText("✓ Verification code sent successfully!");
+            successLabel.setVisible(true);
+
+            // Switch to verify scene after short delay
+            PauseTransition delay = new PauseTransition(Duration.seconds(1.5));
+            delay.setOnFinished(event -> {
+                try {
+                    switchToVerifyScene();
+                } catch (Exception e) {
+                    showError("Error switching scenes: " + e.getMessage());
+                }
+            });
+            delay.play();
+
         } catch (Exception e) {
-            errorLabel.setText("Failed to send verification code: " + e.getMessage());
-            errorLabel.setVisible(true);
+            showError("Failed to send verification code: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    private void showError(String message) {
+        errorLabel.setText(message);
+        errorLabel.setVisible(true);
+        successLabel.setVisible(false);
     }
 
     private void saveVerificationCode(String email, String code) throws Exception {
@@ -144,7 +173,6 @@ public class RequestController {
         props.put("mail.smtp.port", "587");
         props.put("mail.debug", "true");
 
-        System.out.println("Creating mail session...");
         Session session = Session.getInstance(props, new jakarta.mail.Authenticator() {
             @Override
             protected jakarta.mail.PasswordAuthentication getPasswordAuthentication() {
@@ -152,30 +180,21 @@ public class RequestController {
             }
         });
 
-        System.out.println("Session created: " + session);
-
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(from));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         message.setSubject("Password Reset Verification Code");
 
-        // Replace placeholders in the template
         String emailContent = EMAIL_TEMPLATE
                 .replace("{{ user.username }}", username)
                 .replace("{{ code }}", code);
 
-        // Set the email content as HTML
         message.setContent(emailContent, "text/html; charset=utf-8");
-
-        System.out.println("Sending email to: " + to);
         Transport.send(message);
-        System.out.println("Email sent successfully");
     }
 
     private void switchToVerifyScene() throws Exception {
-        System.out.println("Loading verify.fxml...");
         Parent root = FXMLLoader.load(getClass().getResource("/verify.fxml"));
-        System.out.println("verify.fxml loaded successfully");
         Stage stage = (Stage) emailField.getScene().getWindow();
         stage.setScene(new Scene(root, 500, 400));
         stage.setTitle("Verify Code");
@@ -187,5 +206,13 @@ public class RequestController {
 
     public static String getVerificationCode() {
         return verificationCode;
+    }
+
+    @FXML
+    public void backToLogin() throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/login.fxml"));
+        Stage stage = (Stage) emailField.getScene().getWindow();
+        stage.setScene(new Scene(root, 500, 400));
+        stage.setTitle("Login");
     }
 }

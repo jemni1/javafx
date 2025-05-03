@@ -66,7 +66,6 @@
 
                             <TableView fx:id="auditLogTable" prefHeight="220.0" prefWidth="940.0" style="-fx-background-color: white; -fx-border-radius: 5; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 4);">
                                 <columns>
-                                    <TableColumn fx:id="logIdColumn" prefWidth="60.0" text="ID" style="-fx-font-family: 'Arial';"/>
                                     <TableColumn fx:id="actionColumn" prefWidth="120.0" text="Action" style="-fx-font-family: 'Arial';"/>
                                     <TableColumn fx:id="userEmailColumn" prefWidth="180.0" text="User Email" style="-fx-font-family: 'Arial';"/>
                                     <TableColumn fx:id="dateColumn" prefWidth="130.0" text="Date" style="-fx-font-family: 'Arial';"/>
@@ -79,9 +78,7 @@
 
                         <!-- Action Buttons -->
                         <HBox spacing="20" alignment="CENTER">
-                            <Button text="Manage Users" style="-fx-background-color: linear-gradient(to right, #66bb6a, #43a047); -fx-text-fill: #333333; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
-                            <Button text="System Settings" style="-fx-background-color: #90caf9; -fx-text-fill: #333333; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
-                            <Button onAction="#handleBackToAdmin" text="Back to Admin Panel" style="-fx-background-color: #78909c; -fx-text-fill: #333333; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
+                            <Button onAction="#handleBackToAdmin" text="Back to Admin Panel" style="-fx-background-color: #78909c; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10 20;"/>
                         </HBox>
                     </VBox>
                 </HBox>
