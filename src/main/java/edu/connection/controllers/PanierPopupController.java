@@ -6,6 +6,7 @@ import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
 import edu.connection.services.CommandeService;
 import edu.connection.services.EmailService;
+import io.github.cdimascio.dotenv.Dotenv;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -164,8 +165,8 @@ public class PanierPopupController {
             EmailService.sendOrderConfirmationEmail("seifaoun3@gmail.com", panier, total);
 
             // Paiement Stripe
-            Stripe.apiKey = "sk_test_51QqfdtK8cuBxoUKZIk6DsmePaibHWa4h1yavyEVspikhWuuT7TmEYeGDm3mWD6ODGKAkPor6MzMmFEwezbkE39pm00q90TweRy";
-
+            Dotenv dotenv = Dotenv.load();
+            Stripe.apiKey = dotenv.get("STRIPE_API_KEY");
             PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                     .setAmount((long) (total * 100))
                     .setCurrency("eur")
