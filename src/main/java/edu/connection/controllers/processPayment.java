@@ -4,13 +4,15 @@ import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentIntent;
 import com.stripe.param.PaymentIntentCreateParams;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class processPayment {
 
 private void processPayment() {
     try {
 // Set your secret key here
-
+        Dotenv dotenv = Dotenv.load();
+        Stripe.apiKey = dotenv.get("STRIPE_API_KEY");
 // Create a PaymentIntent with other payment details
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount(1000L) // Amount in cents (e.g., $10.00)
