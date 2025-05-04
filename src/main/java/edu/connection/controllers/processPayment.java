@@ -10,6 +10,7 @@ public class processPayment {
 private void processPayment() {
     try {
 // Set your secret key here
+        Stripe.apiKey = "sk_test_51QqfdtK8cuBxoUKZIk6DsmePaibHWa4h1yavyEVspikhWuuT7TmEYeGDm3mWD6ODGKAkPor6MzMmFEwezbkE39pm00q90TweRy";
 
 // Create a PaymentIntent with other payment details
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()

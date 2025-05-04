@@ -20,6 +20,7 @@ public class TestClass {
 
     public static void main(String[] args) {
         // Mets ici ta clé secrète de test
+        Stripe.apiKey = "sk_test_51QqfdtK8cuBxoUKZIk6DsmePaibHWa4h1yavyEVspikhWuuT7TmEYeGDm3mWD6ODGKAkPor6MzMmFEwezbkE39pm00q90TweRy";
 
         try {
             // Essaye de récupérer les infos du compte Stripe

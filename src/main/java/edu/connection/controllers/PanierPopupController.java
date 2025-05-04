@@ -164,6 +164,7 @@ public class PanierPopupController {
             EmailService.sendOrderConfirmationEmail("seifaoun3@gmail.com", panier, total);
 
             // Paiement Stripe
+            Stripe.apiKey = "sk_test_51QqfdtK8cuBxoUKZIk6DsmePaibHWa4h1yavyEVspikhWuuT7TmEYeGDm3mWD6ODGKAkPor6MzMmFEwezbkE39pm00q90TweRy";
 
             PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                     .setAmount((long) (total * 100))

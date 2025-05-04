@@ -17,7 +17,7 @@ public class homePage extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("/admin_commandes.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/commande.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
