@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+
+<BorderPane prefHeight="700.0" prefWidth="1000.0" style="-fx-background-color: #f0f9f0;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connection.controllers.ObjectDetectionController">
+
+    <!-- Left Sidebar -->
+    <left>
+        <VBox spacing="15" alignment="TOP_LEFT" prefWidth="220.0"
+              style="-fx-background-color: #e8f5e9; -fx-border-color: #c8e6c9; -fx-border-width: 0 1 0 0;">
+            <padding><Insets top="30" left="20" right="20" bottom="20"/></padding>
+
+            <Label text="🌱 DataFarm" style="-fx-font-size: 18px; -fx-text-fill: #2e7d32; -fx-font-weight: bold; -fx-padding: 0 0 20 0;"/>
+
+            <VBox spacing="10" style="-fx-padding: 10 0;">
+                <Button text="📦 Equipements" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"/>
+                <Button text="📊 statistiques" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"
+                        onAction="#goToStatistique"/>
+                <Button text="🛒 Produits" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"
+                        onAction="#goToListeProduits"/>
+                <Button text="📑 Commandes" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"
+                        onAction="#goToCommandes"/>
+                <Button text="♻️ Recyclage" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"/>
+                <Button text="❗ Reclamations" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"/>
+                <Button text="👤 Utilisateurs" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"/>
+                <Button text="🌿 Détection des herbes"
+                        style="-fx-background-color: #c8e6c9; -fx-text-fill: #1b5e20; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- Contenu central -->
+    <center>
+        <VBox spacing="20" alignment="TOP_CENTER" style="-fx-padding: 20;">
+            <!-- Titre -->
+            <Label text="Détection Intelligente de Plantes"
+                   style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2e7d32; -fx-effect: dropshadow(gaussian, rgba(255,255,255,0.8), 0, 0, 0, 1);"/>
+
+            <!-- Zone d'image -->
+            <VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #e8f5e9; -fx-background-radius: 10; -fx-padding: 20;">
+                <ImageView fx:id="imageView" fitHeight="450.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true"
+                           style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0.5, 0, 2); -fx-background-color: white; -fx-background-radius: 5; -fx-border-color: #c8e6c9; -fx-border-radius: 5; -fx-border-width: 1;"/>
+
+                <Label fx:id="statusLabel" text="Aucune image chargée"
+                       style="-fx-font-size: 16px; -fx-text-fill: #444; -fx-font-weight: bold; -fx-background-color: white; -fx-background-radius: 15; -fx-padding: 8 15; -fx-border-color: #c8e6c9; -fx-border-radius: 15; -fx-border-width: 1;">
+                    <font>
+                        <Font name="System" size="16.0"/>
+                    </font>
+                </Label>
+            </VBox>
+
+            <!-- Boutons de contrôle -->
+            <HBox alignment="CENTER" spacing="30.0" style="-fx-padding: 20 0 0 0;">
+                <Button fx:id="loadButton" mnemonicParsing="false" onAction="#onLoadImage" prefHeight="45.0" prefWidth="200.0"
+                        style="-fx-background-color: #2e7d32; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);"
+                        text="Charger une image">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="detectButton" disable="true" mnemonicParsing="false" onAction="#onDetectObjects" prefHeight="45.0" prefWidth="200.0"
+                        style="-fx-background-color: #4caf50; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);"
+                        text="Analyser l'image">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Button>
+                <Button fx:id="saveButton" disable="true" mnemonicParsing="false" onAction="#onSaveResult" prefHeight="45.0" prefWidth="200.0"
+                        style="-fx-background-color: #81c784; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);"
+                        text="Sauvegarder">
+                    <font>
+                        <Font size="14.0"/>
+                    </font>
+                </Button>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>

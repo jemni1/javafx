@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="edu.connection.controllers.StatistiquesController"
+            style="-fx-background-color: #f5fff5;">
+
+    <!-- TOP NAVIGATION BAR (ADJUSTED) -->
+
+    <!-- LEFT SIDEBAR (UNCHANGED) -->
+    <left>
+        <VBox spacing="15" alignment="TOP_LEFT" prefWidth="220.0"
+              style="-fx-background-color: #e8f5e9; -fx-border-color: #c8e6c9; -fx-border-width: 0 1 0 0;">
+            <padding><Insets top="30" left="20" right="20" bottom="20"/></padding>
+
+            <Label text="🌱 DataFarm" style="-fx-font-size: 18px; -fx-text-fill: #2e7d32; -fx-font-weight: bold; -fx-padding: 0 0 20 0;"/>
+
+            <VBox spacing="10" style="-fx-padding: 10 0;">
+                <Button text="📦 Equipements" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"/>
+                <Button text="📊 statistique" style="-fx-background-color: #c8e6c9; -fx-text-fill: #1b5e20; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;"
+                />
+                <Button text="🛒 Produits" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"
+                        onAction="#goToListeProduits"/>
+
+
+                <Button text="📑 Commandes" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"
+                        onAction="#goToAdminCommandes"/>
+
+                <Button text="♻️ Recyclage" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"/>
+
+                <Button text="❗ Reclamations" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"/>
+
+                <Button text="👤 Utilisateurs" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"/>
+                <Button text="🌿 Détection des herbes" style="-fx-background-color: transparent; -fx-text-fill: #2d6a4f; -fx-alignment: CENTER_LEFT; -fx-font-size: 14px;"
+                        onAction="#goToObjectDetection"/>
+            </VBox>
+        </VBox>
+    </left>
+
+    <!-- CENTER CONTENT (UNCHANGED) -->
+    <center>
+        <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 30;">
+            <Label text="📋 Statistiques de ventes"
+                   style="-fx-font-size: 24px; -fx-text-fill: #1b5e20; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0,100,0,0.1), 0, 0, 0, 1);"/>
+
+            <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+            <HBox spacing="20" alignment="CENTER">
+                <BarChart fx:id="quantiteBarChart" title="Répartition des ventes par produit"
+                          legendVisible="true"
+                          prefWidth="350" prefHeight="280"
+                          style="-fx-background-color: #e8f5e9; -fx-background-radius: 5; -fx-border-color: #2e8b57; -fx-border-width: 1; -fx-border-radius: 5; -fx-legend-side: BOTTOM;">
+                    <xAxis>
+                        <CategoryAxis label="Produit" style="-fx-tick-label-fill: #1b5e20;"/>
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis label="Quantité" style="-fx-tick-label-fill: #1b5e20;"/>
+                    </yAxis>
+                </BarChart>
+
+                <PieChart fx:id="ventesPieChart" title="Répartition des ventes par produit"
+                          legendVisible="true"
+                          prefWidth="350" prefHeight="280"
+                          style="-fx-background-color: #e8f5e9; -fx-background-radius: 5; -fx-border-color: #2e8b57; -fx-border-width: 1; -fx-border-radius: 5; -fx-pie-label-visible: true; -fx-legend-side: RIGHT;" />
+            </HBox>
+
+            <LineChart fx:id="chiffreAffairesLineChart" title="Chiffre d'affaires par date"
+                       prefWidth="720" prefHeight="280"
+                       style="-fx-background-color: #e8f5e9; -fx-background-radius: 5; -fx-border-color: #2e8b57; -fx-border-width: 1; -fx-border-radius: 5; -fx-create-symbols: true; -fx-legend-side: BOTTOM;">
+                <xAxis>
+                    <CategoryAxis label="Date" style="-fx-tick-label-fill: #1b5e20;"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Montant (€)" style="-fx-tick-label-fill: #1b5e20;"/>
+                </yAxis>
+            </LineChart>
+        </VBox>
+    </center>
+
+    <!-- BOTTOM (UNCHANGED) -->
+    <bottom>
+        <StackPane style="-fx-background-color: #a5d6a7; -fx-padding: 10;">
+            <Label text="© 2025 - Tableau de bord des statistiques"
+                   style="-fx-font-size: 12px; -fx-text-fill: #1b5e20;" />
+        </StackPane>
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.effect.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="edu.connection.controllers.ProduitCard"
+      alignment="CENTER"
+      spacing="12"
+      style="-fx-background-color: #f8fef8; -fx-padding: 15; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: #d0e8d0; -fx-border-width: 1;">
+
+    <!-- Image produit -->
+    <ImageView fx:id="imageView"
+               fitWidth="200"
+               fitHeight="120"
+               preserveRatio="true"
+               style="-fx-background-radius: 5; -fx-background-color: white; -fx-border-color: #e0f0e0; -fx-border-width: 1;"/>
+
+    <!-- Infos produit -->
+    <VBox alignment="CENTER" spacing="6">
+        <Label fx:id="nomLabel" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2d5c3d;"/>
+        <HBox spacing="15">
+            <Label fx:id="quantiteLabel" style="-fx-text-fill: #4a7c5a;"/>
+            <Label fx:id="prixLabel" style="-fx-font-weight: bold; -fx-text-fill: #1e8a49;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Boutons d'action avec texte explicite -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="editButton" text="🖊"
+                style="-fx-background-color: #5cb85c; -fx-text-fill: white; -fx-font-size: 12px; -fx-background-radius: 15; -fx-padding: 5 10;"/>
+
+        <Button fx:id="detailsButton" text="👁"
+                style="-fx-background-color: #5bc0de; -fx-text-fill: white; -fx-font-size: 12px; -fx-background-radius: 15; -fx-padding: 5 10;"/>
+
+        <Button fx:id="deleteButton" text="🗑"
+                style="-fx-background-color: #d9534f; -fx-text-fill: white; -fx-font-size: 12px; -fx-background-radius: 15; -fx-padding: 5 10;"/>
+    </HBox>
+</VBox>
