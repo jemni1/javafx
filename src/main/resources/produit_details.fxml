@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="edu.connection.controllers.ProduitDetailsController"
+      spacing="20"
+      alignment="CENTER"
+      style="-fx-padding: 30; -fx-background-color: #f5fef5; -fx-border-color: #d0e8d0; -fx-border-width: 1; -fx-border-radius: 12; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(0,100,0,0.1), 10, 0, 0, 2);">
+
+    <!-- Titre -->
+    <Label text="Détails du Produit"
+           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #2e7d32;"/>
+
+    <!-- Image produit -->
+    <ImageView fx:id="imageView"
+               fitWidth="300"
+               fitHeight="200"
+               preserveRatio="true"
+               style="-fx-background-radius: 8; -fx-background-color: white; -fx-border-color: #c8e6c9; -fx-border-width: 1;">
+        <effect>
+            <DropShadow radius="5" color="rgba(0,50,0,0.1)"/>
+        </effect>
+    </ImageView>
+
+    <!-- Informations produit -->
+    <VBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 0 20;">
+        <Label fx:id="nomLabel"
+               style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2d6a4f;"/>
+
+        <HBox spacing="20">
+            <Label fx:id="quantiteLabel"
+                   style="-fx-font-size: 16px; -fx-text-fill: #4a7c59;"/>
+
+            <Label fx:id="prixLabel"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1e8449;"/>
+        </HBox>
+    </VBox>
+</VBox>

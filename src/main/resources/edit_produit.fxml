@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.paint.*?>
+
+<VBox xmlns="http://javfx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="edu.connection.controllers.EditProduitController"
+      alignment="CENTER"
+      spacing="20"
+      style="-fx-padding: 30; -fx-background-color: linear-gradient(to bottom right, #f0f9f0, #e0f3e0); -fx-background-radius: 15; -fx-border-color: linear-gradient(to bottom, #a8d8a8, #88c888); -fx-border-width: 1.5; -fx-border-radius: 15;">
+
+    <!-- Effet d'ombre portée subtile -->
+    <effect>
+        <DropShadow color="#88c88888" radius="10" spread="0.05"/>
+    </effect>
+
+    <Label text="✏️ Modifier Produit"
+           style="-fx-font-size: 24px; -fx-font-weight: 700; -fx-text-fill: #2d6a4f; -fx-effect: dropshadow(gaussian, #e8f5e9, 2, 0.5, 0, 1);"/>
+
+    <TextField fx:id="nomField"
+               promptText="Nom du produit"
+               style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #ffffff; -fx-border-color: #c8e6c9; -fx-border-width: 1.5; -fx-padding: 10 15; -fx-font-size: 14px; -fx-text-fill: #2d6a4f; -fx-prompt-text-fill: #81c784; -fx-effect: innershadow(gaussian, #e8f5e9, 5, 0.3, 0, 1);"/>
+
+    <TextField fx:id="quantiteField"
+               promptText="Quantité"
+               style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #ffffff; -fx-border-color: #c8e6c9; -fx-border-width: 1.5; -fx-padding: 10 15; -fx-font-size: 14px; -fx-text-fill: #2d6a4f; -fx-prompt-text-fill: #81c784; -fx-effect: innershadow(gaussian, #e8f5e9, 5, 0.3, 0, 1);"/>
+
+    <TextField fx:id="prixField"
+               promptText="Prix"
+               style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #ffffff; -fx-border-color: #c8e6c9; -fx-border-width: 1.5; -fx-padding: 10 15; -fx-font-size: 14px; -fx-text-fill: #2d6a4f; -fx-prompt-text-fill: #81c784; -fx-effect: innershadow(gaussian, #e8f5e9, 5, 0.3, 0, 1);"/>
+
+    <TextField fx:id="imageField"
+               promptText="Nom de l'image (avec extension)"
+               style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #ffffff; -fx-border-color: #c8e6c9; -fx-border-width: 1.5; -fx-padding: 10 15; -fx-font-size: 14px; -fx-text-fill: #2d6a4f; -fx-prompt-text-fill: #81c784; -fx-effect: innershadow(gaussian, #e8f5e9, 5, 0.3, 0, 1);"/>
+
+    <Button text="Choisir une image"
+            onAction="#choisirImage"
+            style="-fx-background-color: linear-gradient(to bottom, #a5d6a7, #81c784); -fx-text-fill: white; -fx-font-weight: 600; -fx-background-radius: 10; -fx-padding: 8 20; -fx-border-color: #66bb6a; -fx-border-radius: 10; -fx-border-width: 1; -fx-effect: dropshadow(gaussian, #a5d6a7, 5, 0.2, 0, 1);"/>
+
+    <Button text="💾 Enregistrer"
+            onAction="#enregistrerModification"
+            style="-fx-background-color: linear-gradient(to bottom, #4caf50, #2e7d32); -fx-text-fill: white; -fx-font-weight: 700; -fx-background-radius: 10; -fx-padding: 12 30; -fx-border-color: #1b5e20; -fx-border-radius: 10; -fx-border-width: 1; -fx-effect: dropshadow(gaussian, #2e7d32, 8, 0.3, 0, 2);">
+        <VBox.margin>
+            <Insets top="15"/>
+        </VBox.margin>
+    </Button>
+
+</VBox>

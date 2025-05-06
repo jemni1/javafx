@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.effect.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="edu.connection.controllers.PanierPopupController"
+            prefWidth="450" prefHeight="600" style="-fx-background-color: #f8f9fa; -fx-border-color: #e0e0e0; -fx-border-width: 1;">
+
+    <!-- Header avec effet d'ombre -->
+    <top>
+        <StackPane style="-fx-background-color: linear-gradient(to right, #006400, #007000); -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);">
+            <Label text="🛒 Mon Panier"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white; -fx-padding: 15;"/>
+            <HBox alignment="CENTER_RIGHT" style="-fx-padding: 0 15 0 0;">
+                <Circle radius="12" fill="#ff5722" stroke="white" strokeWidth="2">
+                    <effect>
+                        <InnerShadow radius="2" color="rgba(0,0,0,0.3)"/>
+                    </effect>
+                </Circle>
+                <Label fx:id="itemsCountLabel" text="0"
+                       style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-translate-x: -12;"/>
+            </HBox>
+        </StackPane>
+    </top>
+
+    <!-- Contenu principal avec scroll -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" style="-fx-background: #f8f9fa; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
+            <VBox fx:id="produitsVBox" spacing="15" style="-fx-padding: 15;">
+                <!-- Les produits seront ajoutés dynamiquement ici -->
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <!-- Pied de page avec total et bouton -->
+    <bottom>
+        <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, -2, 0);">
+            <HBox alignment="CENTER_RIGHT" spacing="10">
+                <Label text="Total:" style="-fx-font-size: 16px; -fx-text-fill: #555;"/>
+                <Label fx:id="totalLabel" text="0.00 €" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #006400;"/>
+            </HBox>
+
+            <Button fx:id="validerCommandeBtn" text="VALIDER LA COMMANDE"
+                    style="-fx-background-color: linear-gradient(to right, #006400, #007000);
+                           -fx-text-fill: white;
+                           -fx-font-weight: bold;
+                           -fx-font-size: 16px;
+                           -fx-padding: 12 0;
+                           -fx-background-radius: 5;"
+                    onAction="#validerCommande">
+                <effect>
+                    <DropShadow radius="3" color="rgba(0,100,0,0.3)"/>
+                </effect>
+            </Button>
+
+
+        </VBox>
+    </bottom>
+</BorderPane>
