@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.ProgressBar?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.StatistiqueController" style="-fx-background-color: #f8f9fa;">
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="10" left="20" />
+            </padding>
+            <Label text="📊 Statistiques du Recyclage Sélectionné" style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #2e7d32; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 2, 0, 0, 1);" />
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20" />
+            </padding>
+
+            <Label text="Quantité Recyclée (kg):" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #1b5e20;" />
+            <BarChart fx:id="quantiteRecycleeChart" style="-fx-pref-width: 500; -fx-pref-height: 300; -fx-background-color: white; -fx-background-radius: 5px; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+                <xAxis>
+                    <CategoryAxis label="" style="-fx-tick-label-fill: #424242; -fx-font-size: 12;" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Quantité (kg)" style="-fx-tick-label-fill: #424242; -fx-font-size: 12;" />
+                </yAxis>
+            </BarChart>
+
+            <Label text="Énergie Produite (kWh):" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #1b5e20; -fx-padding: 10 0 5 0;" />
+            <ProgressBar fx:id="energieProduiteProgress" progress="0" style="-fx-pref-width: 400; -fx-accent: #4caf50; -fx-control-inner-background: #e8f5e9; -fx-background-radius: 4px;" />
+
+            <HBox spacing="10" style="-fx-padding: 10 0 0 0;">
+                <Label text="Rendement Énergétique (kWh/kg):" style="-fx-font-size: 14; -fx-text-fill: #1b5e20; -fx-font-weight: bold;" />
+                <Label fx:id="rendementLabel" style="-fx-font-size: 14; -fx-text-fill: #1b5e20; -fx-font-weight: normal;" />
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="20" left="10" />
+            </padding>
+            <Button text="Fermer" onAction="#fermer" style="-fx-background-color: #388e3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5px; -fx-padding: 8 20; -fx-cursor: hand; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 3, 0, 0, 1);" />
+        </HBox>
+    </bottom>
+</BorderPane>

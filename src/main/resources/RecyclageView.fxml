@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RecyclageController">
+    <top>
+        <VBox spacing="10" style="-fx-background-color: #f5f7fa;">
+            <padding>
+                <Insets top="15" right="20" bottom="10" left="20" />
+            </padding>
+            <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE" style="-fx-background-color: transparent;">
+                <tabs>
+                    <Tab text="♻️ Recyclage" fx:id="recyclageTab">
+                        <content>
+                            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 5; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 1);">
+                                <HBox alignment="CENTER_LEFT" style="-fx-background-color: linear-gradient(to right, #388e3c, #4caf50); -fx-padding: 12; -fx-background-radius: 3;">
+                                    <Label text="♻️ Opérations de recyclage" textFill="WHITE" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 1, 0, 1, 1);" />
+                                    <Region HBox.hgrow="ALWAYS" />
+                                    <Button onAction="#ajouterRecyclage" style="-fx-background-color: white; -fx-font-weight: bold; -fx-padding: 5 10;">
+                                        <HBox.margin>
+                                            <Insets right="8" />
+                                        </HBox.margin>
+                                        <graphic>
+                                            <Label text="➕" style="-fx-font-size: 14;"/>
+                                        </graphic>
+                                    </Button>
+                                    <Button fx:id="statistiqueButton" onAction="#afficherStatistique" style="-fx-background-color: white; -fx-font-weight: bold; -fx-padding: 5 10;">
+                                        <graphic>
+                                            <Label text="📊" style="-fx-font-size: 14;"/>
+                                        </graphic>
+                                    </Button>
+                                </HBox>
+
+                                <TableView fx:id="recyclageTable" VBox.vgrow="ALWAYS" style="-fx-background-color: transparent; -fx-border-color: #e0e0e0; -fx-border-radius: 3;">
+                                    <columns>
+                                        <TableColumn fx:id="dateColumn" text="Date de début" prefWidth="150" style="-fx-font-weight: bold;" />
+                                        <TableColumn fx:id="quantiteRecycléeColumn" text="Quantité Recyclée (kg)" style="-fx-font-weight: bold;" />
+                                        <TableColumn fx:id="energieProduiteColumn" text="Énergie Produite (kWh)" style="-fx-font-weight: bold;" />
+                                        <TableColumn fx:id="utilisationColumn" text="Utilisation" prefWidth="120" style="-fx-font-weight: bold;" />
+                                        <TableColumn fx:id="dateRecyclageColumn" text="Date fin" prefWidth="150" style="-fx-font-weight: bold;" />
+                                    </columns>
+                                </TableView>
+
+                                <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 5 0;">
+                                    <Button onAction="#afficherDetailsRecyclage" style="-fx-background-color: #8db9e3; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10;">
+                                        <graphic>
+                                            <Label text="👀" style="-fx-font-size: 14;"/>
+                                        </graphic>
+                                    </Button>
+                                    <Button onAction="#modifierRecyclage" style="-fx-background-color: #e6bb88; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10;">
+                                        <graphic>
+                                            <Label text="✍️" style="-fx-font-size: 14;"/>
+                                        </graphic>
+                                    </Button>
+                                    <Button onAction="#supprimerRecyclage" style="-fx-background-color: #ff6767; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10;">
+                                        <graphic>
+                                            <Label text="🗑" style="-fx-font-size: 14;"/>
+                                        </graphic>
+                                    </Button>
+                                    <Button onAction="#exporterPDF" style="-fx-background-color: #b4ffbb; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10;">
+                                        <graphic>
+                                            <Label text="📃" style="-fx-font-size: 14;"/>
+                                        </graphic>
+                                    </Button>
+                                </HBox>
+
+                                <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #f8f9fa; -fx-padding: 8; -fx-background-radius: 3; -fx-border-color: #e0e0e0; -fx-border-radius: 3;">
+                                    <Label text="Totaux:" style="-fx-font-weight: bold; -fx-text-fill: #616161;" />
+                                    <Label text=" Quantité: " style="-fx-text-fill: #616161;" />
+                                    <Label fx:id="totalQuantiteLabel" text="0 kg" textFill="#388e3c" style="-fx-font-size: 13; -fx-font-weight: bold;" />
+                                    <Label text=" | Énergie: " style="-fx-text-fill: #616161;" />
+                                    <Label fx:id="totalEnergieLabel" text="0 kWh" textFill="#1976d2" style="-fx-font-size: 13; -fx-font-weight: bold;" />
+                                </HBox>
+                            </VBox>
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
+        </VBox>
+    </top>
+</BorderPane>
