@@ -1,10 +1,9 @@
 # Data Farm - Smart & Sustainable Agriculture Platform with AI & ODD
 
 <div align="center">
-  <img src="./src/main/resources/images/logo11.png" alt="Data Farm Logo" width="400"/>
+  <img src="./src/main/resources/logo.png" alt="Data Farm Logo" width="400"/>
   <p><em>Revolutionizing agriculture with AI and sustainable practices</em></p>
 </div>
-
 ## 📋 Overview
 
 **Data Farm** is an intelligent desktop application developed as part of the **Esprit School of Engineering** university project.
