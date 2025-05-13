@@ -214,24 +214,38 @@ data-farm/
 # Start the application with Maven
 mvn javafx:run
 
+# Run AI services separately if needed
+cd src/main/resources/python
+python run_detection.py
+```
 
-🤝 Contributing
+### Testing
+```bash
+# Run tests with Maven
+mvn test
+```
+
+## 🤝 Contributing
+
 We welcome contributions to the Data Farm project!
 
-Fork the repository
-Create your feature branch (git checkout -b feature/amazing-feature)
-Commit your changes (git commit -m 'Add some amazing feature')
-Push to the branch (git push origin feature/amazing-feature)
-Open a Pull Request
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-📄 License
+## 📄 License
+
 This project is licensed under the MIT License - see the LICENSE file for details.
-👏 Acknowledgments
 
-Esprit School of Engineering for project guidance
-YOLOv8 and Ultralytics for AI vision capabilities
-All contributors who have helped shape this project
+## 👏 Acknowledgments
 
+- Esprit School of Engineering for project guidance
+- YOLOv8 and Ultralytics for AI vision capabilities
+- All contributors who have helped shape this project
+
+---
 
 <div align="center">
   <p>Developed with ❤️ by the Data Farm Team</p>
